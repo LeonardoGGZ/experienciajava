@@ -1,0 +1,2 @@
+*El boton notificar poseera dos opciones: una, la cual sirve para establecer
+avisos futuros, y la otra para obtener los recordatorios mas cercanos.

@@ -1,0 +1,9 @@
+La funcionalidad de autoincremento al momento de guardar las tablas pertenecientes
+a los horarios:
+*Se debe crear una tabla en mysql, la cual posea 7 columnas(los dias de la semana), y como
+unico dato poseido, un tipo int el cual almacenara el numero de veces que un dia ocurre.
+*Dicho campo se incrementara desde el temporizador, para esto se obtendra el valor almacenado
+en la BBDD y luego, con una consulta UPDATE se remplaza el valor anterior(actual-1) por el 
+actual. Todo esto al momento de crear la tabla con el informe diario al finalizar el dia.
+
+

@@ -1,0 +1,251 @@
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
+import java.sql.Statement;
+
+
+
+
+
+public class AlmacenarEnBD{
+   
+    public JButton acceptar,cancelar;
+    private JLabel msgG;
+    private JLabel msgAct;
+    private byte horas;
+    private byte minutos;
+    private byte segundos;
+    private String nombre;
+    public boolean Cancelar;
+    
+    private PreparedStatement Cnombre;
+    private PreparedStatement Choras;
+    private PreparedStatement Cminutos;
+    private PreparedStatement Csegundos;
+    
+    private PreparedStatement consulta;
+          
+          Connection cn = null;
+    
+    public AlmacenarEnBD(String nombre,byte horas,byte minutos,byte segundos){
+    
+       cn = null;
+       
+       this.nombre = nombre;
+       this.horas = horas;
+       this.minutos = minutos;
+       this.segundos = segundos;
+       
+    
+    }
+    
+    
+  
+    
+    public void AlmacenarDatos(){
+       
+        try{
+              System.out.println("Acceptar");
+              cn.setAutoCommit(false);
+              
+              consulta = cn.prepareStatement("INSERT INTO datostiempo(NOMBRE,HORAS,MINUTOS,SEGUNDOS) VALUES(?,?,?,?)");
+              consulta.setString(1,nombre);
+              consulta.setByte(2,horas);
+              consulta.setByte(3,minutos);
+              consulta.setByte(4,segundos);
+              
+              consulta.executeUpdate();
+
+             cn.commit();
+
+
+          }catch(Exception ex){
+              ex.printStackTrace();
+              
+              System.out.println("Error en las consultas");
+             
+             try{ 
+             // cn.rollback();
+             }catch(Exception exc){
+                 
+             }
+        
+       }
+    
+    } 
+   
+    
+  /*  
+  class OyenteTecladoYMouse extends MouseAdapter{
+    
+    
+    @Override
+     public void mouseClicked(MouseEvent e){
+         
+         try{
+             cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bd_horarios","root","");
+             
+             acceptar.setEnabled(true);
+             msgG.setVisible(true);
+             
+            if(msgAct != null){ 
+                
+             msgAct.setVisible(false);
+           
+            }
+            
+         }catch(Exception ex){
+             
+             acceptar.setEnabled(false);
+             msgG.setVisible(false);
+             
+             if(msgAct != null){ 
+                 
+             msgAct.setVisible(true);
+           
+             }
+             ex.printStackTrace(); 
+          }
+            
+         }
+
+  } 
+  */
+      
+  
+    /*
+  @Override  
+  public void actionPerformed(ActionEvent e){
+      
+      if(e.getSource() == acceptar){
+          
+          try{
+              System.out.println("Acceptar");
+              cn.setAutoCommit(false);
+              
+              consulta = cn.prepareStatement("INSERT INTO datostiempo(NOMBRE,HORAS,MINUTOS,SEGUNDOS) VALUES(?,?,?,?)");
+              consulta.setString(1,nombre);
+              consulta.setByte(2,horas);
+              consulta.setByte(3,minutos);
+              consulta.setByte(4,segundos);
+              
+              consulta.executeUpdate();
+
+             cn.commit();
+
+
+          }catch(Exception ex){
+              ex.printStackTrace();
+              
+              System.out.println("Error en las consultas");
+             
+             try{ 
+             // cn.rollback();
+             }catch(Exception exc){
+                 
+             }
+          }
+          
+        
+        setVisible(false);
+        
+      }else{
+          
+       setVisible(false);
+       Cancelar = true;
+          System.out.println("cancelar");
+      }
+      
+      
+  }  
+  */
+/*
+
+class Panel extends JPanel {
+    
+    private boolean Activo;
+   
+    
+   public Panel(ActionListener ac/*, OyenteTecladoYMouse otm){ 
+     
+       Activo = false;
+       
+       acceptar = new JButton("Acceptar");
+       acceptar.addActionListener(ac);
+       add(acceptar);
+       
+       cancelar = new JButton("Cancelar");
+       cancelar.addActionListener(ac);
+       add(cancelar);
+       
+       
+       msgG = new JLabel("¿Deseas guardar?");
+       add(msgG);
+       
+    //   addMouseListener(otm);
+       
+       
+       
+       
+
+       Activo = ComprobarActividad();
+       
+       if(Activo){
+           
+       }else{
+           
+           msgAct = new JLabel("BBDD inactiva");
+           msgG.setVisible(false);
+           acceptar.setEnabled(Activo);
+           
+           add(msgAct);
+       }
+       
+   }
+   
+
+*/
+      
+     public boolean ComprobarActividad(){
+         
+         try{
+             
+             cn = DriverManager.getConnection("jdbc:mysql://localhost/bd_horarios","root","");
+              
+             System.out.println("True");
+             return true;
+            
+         }catch(Exception e){
+             
+             System.out.println("False");
+             
+             return false;
+             
+         }
+         
+     }
+
+    
+    }
+
+
+
+
+ 
+
+
+
+
+
+
